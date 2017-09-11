@@ -17,11 +17,19 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "epamghio",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "./vendor/bootstrap.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "./vendor/tether.min.js",
+        "./vendor/popper.js",
+        "./vendor/bootstrap.js",
+        "./vendor/jquery.easing.js",
+        "./script.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
