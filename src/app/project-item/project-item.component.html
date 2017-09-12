@@ -1,0 +1,16 @@
+<section id="projects">
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <h5 class="card-title">{{project.name}}</h5>
+        <div class="card-subtitle text-muted language-block" *ngIf="project.language">
+          <span class="color-label {{project.language}}"></span>
+          <span class="language-{{project.language}}">{{project.language}}</span>
+        </div>
+      </div>
+      <p class="card-text">{{project.description}}</p>
+      <a href="{{project.githubUrl}}" class="card-link">View github page</a>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,54 @@
+footer {
+  padding: 0;
+}
+
+.card {
+  margin-bottom: 10px;
+}
+
+.card-title {
+  display: inline-block;
+}
+
+.language-block {
+  display: inline-block;
+  margin-left: 25px;
+}
+
+.color-label {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.color-label {
+  background-color: #f34b7d;
+}
+.color-label.Java {
+  background-color: #b07219;
+}
+.color-label.JavaScript {
+  background-color: #f1e05a;
+}
+.color-label.PHP {
+  background-color: #4F5D95;
+}
+.color-label.HTML {
+  background-color: #e34c26;
+}
+.color-label.Python {
+  background-color: #3572A5;
+}
+.color-label.CSS {
+  background-color: #563d7c;
+}
+.color-label.C {
+  background-color: #f34b7d;
+}
+.color-label.Objective-C {
+  background-color: #438eff;
+}
+

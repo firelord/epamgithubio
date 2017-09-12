@@ -20,13 +20,13 @@
       "prefix": "epamghio",
       "styles": [
         "styles.css",
-        "./vendor/bootstrap.css"
+        "../node_modules/bootstrap/dist/css/bootstrap.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "./vendor/tether.min.js",
         "./vendor/popper.js",
-        "./vendor/bootstrap.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js",
         "./vendor/jquery.easing.js",
         "./script.js"
       ],

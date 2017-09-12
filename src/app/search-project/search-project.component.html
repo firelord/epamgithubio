@@ -1,0 +1,12 @@
+<div class="search-panel form-inline">
+  <div class="col-md-9">
+    <input [formControl]="searchInput" class="form-control" placeholder="Filter">
+  </div>
+  <div class="col-md-3">
+    <select [formControl]="languageSelect" class="custom-select" id="inlineFormCustomSelect">
+      <option *ngFor="let language of languages" [value]="language.value">
+        {{language.name}}
+      </option>
+    </select>
+  </div>
+</div>

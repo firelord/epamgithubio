@@ -1,0 +1,11 @@
+<section id="projects" class="content-section">
+  <div class="container">
+    <epamghio-search-project></epamghio-search-project>
+
+    <div class="row">
+      <div *ngFor="let project of projects;" class="col-md-6">
+        <epamghio-project-item [project]="project"></epamghio-project-item>
+      </div>
+    </div>
+  </div>
+</section>

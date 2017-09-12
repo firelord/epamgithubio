@@ -1,0 +1,16 @@
+.search-panel {
+  padding: 15px 0;
+}
+
+.form-control, select {
+  width: 100%;
+}
+
+.search-panel > div:first-child,
+.search-panel > div:last-child{
+  padding-left: 0;
+}
+
+.search-panel > div:last-child {
+  padding-right: 0;
+}

@@ -4,19 +4,27 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {HttpModule} from '@angular/http';
-import {RouterModule} from '@angular/router';
 import {Ng2Webstorage} from 'ng2-webstorage';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HomeComponent} from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { IntroHeaderComponent } from './intro-header/intro-header.component';
+import { AboutComponent } from './about/about.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectItemComponent } from './project-item/project-item.component';
+import { SearchProjectComponent } from './search-project/search-project.component';
+import {ProjectService} from './service/project.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent,
-    FooterComponent
+    FooterComponent,
+    IntroHeaderComponent,
+    AboutComponent,
+    ProjectsComponent,
+    ProjectItemComponent,
+    SearchProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -24,13 +32,9 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     BrowserAnimationsModule,
     Ng2Webstorage.forRoot({prefix: 'epamghio', separator: '-'}),
-    RouterModule.forRoot([
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', component: HomeComponent}
-    ]),
     HttpModule
   ],
-  providers: [],
+  providers: [ProjectService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
