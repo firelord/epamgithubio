@@ -20,7 +20,7 @@ export class SearchProjectComponent implements OnInit {
   };
 
   languages = [
-    {name: 'All', value: ''},
+    {name: 'Any Language', value: ''},
     {name: 'Java', value: 'java'},
     {name: 'JavaScript', value: 'javascript'},
     {name: 'C++', value: 'c++'},

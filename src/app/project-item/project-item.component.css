@@ -4,6 +4,31 @@ footer {
 
 .card {
   margin-bottom: 10px;
+  background-color: #2E2E2E;
+  color: lightyellow;
+}
+
+.card:hover {
+  background-color: #2f2f2f;
+}
+
+.card-link{
+  color: darksalmon;
+}
+
+button {
+  background: brown;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background: #942626;
+}
+
+hr {
+  background-color: darksalmon;
 }
 
 .card-title {
