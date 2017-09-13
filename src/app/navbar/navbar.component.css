@@ -2,15 +2,13 @@
   font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin-bottom: 0;
   text-transform: uppercase;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  background-color: black;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 #mainNav .navbar-toggler {
   font-size: 14px;
   padding: 11px;
   color: white;
-  border: 1px solid white;
 }
 
 #mainNav .navbar-brand {
@@ -53,13 +51,13 @@
   #mainNav.navbar-shrink {
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    background: black;
+    /*border-bottom: 1px solid rgba(255, 255, 255, 0.3);*/
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   #mainNav .nav-link.active {
     outline: none;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.5);
   }
 
   #mainNav .nav-link.active:hover {
