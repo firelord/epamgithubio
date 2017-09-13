@@ -14,4 +14,8 @@ export class ProjectItemComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  onClick() {
+    window.location.href = this.project.githubUrl;
+  }
 }

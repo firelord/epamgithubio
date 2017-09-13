@@ -10,8 +10,9 @@
       </div>
       <hr />
       <p class="card-text">{{project.description}}</p>
-      <button class="btn">View github page</button>
-      <!--<a href="{{project.githubUrl}}" class="card-link">View github page</a>-->
+      <button class="btn" (click)="onClick()">
+        View github page
+      </button>
     </div>
   </div>
 </section>
