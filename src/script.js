@@ -1,4 +1,4 @@
-function test() {
+function processScrolling() {
   var $ = jQuery;
 
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function (e) {
