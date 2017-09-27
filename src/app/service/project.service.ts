@@ -17,7 +17,7 @@ export class ProjectService {
   projects: Observable<Project>;
 
   constructor(private http: Http) {
-    const request = new Request({url: '/orgs/epam/repos/'});
+    const request = new Request({url: 'https://api.github.com/orgs/epam/repos'});
     request.method = RequestMethod.Get;
 
     request.headers = new Headers({'content-type': 'application/json'});
