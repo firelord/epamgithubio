@@ -25,6 +25,7 @@
     "core-js": "^2.4.1",
     "jquery": "^3.0.0",
     "jquery.easing": "^1.4.1",
+    "marky-markdown": "^11.3.2",
     "ng2-webstorage": "1.8.0",
     "popper.js": "^1.12.5",
     "rxjs": "^5.1.0",

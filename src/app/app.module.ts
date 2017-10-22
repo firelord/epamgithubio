@@ -14,6 +14,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
 import { SearchProjectComponent } from './search-project/search-project.component';
 import {ProjectService} from './service/project.service';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,10 @@ import {ProjectService} from './service/project.service';
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot([
+      {path: '', redirectTo: 'repoList', pathMatch: 'prefix'},
+      {path: 'repoList', component: AppComponent}
+    ]),
     Ng2Webstorage.forRoot({prefix: 'epamghio', separator: '-'}),
     HttpModule
   ],

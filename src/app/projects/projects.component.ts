@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ProjectSearchRequest} from '../model/ProjectSearchRequest';
 import {ProjectService} from '../service/project.service';
 import {Project} from '../model/Project';
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'epamghio-projects',
@@ -9,25 +11,39 @@ import {Project} from '../model/Project';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  projects: Project[];
-  constructor(private projectService: ProjectService) { }
+  @Input() page: number;
+
+  searchRequest = new ProjectSearchRequest('', '', 1);
+
+  projects: Observable<Project[]>;
+
+  constructor(private projectService: ProjectService,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    this.initProjectsFromObservable(new ProjectSearchRequest('', ''));
+    this.initProjectsFromObservable(this.searchRequest);
 
     this.projectService.searchEvent.subscribe(
-      filter => this.initProjectsFromObservable(filter)
+      request => this.fillRequestAndSearch(request)
     );
+
+    this.route
+      .queryParams
+      .subscribe(queryParams => {
+        if (queryParams['page'])
+          this.projectService.searchEvent.emit({pageNumber: queryParams['page']});
+      });
+  }
+
+  private fillRequestAndSearch(requestPart) {
+    this.searchRequest.language = requestPart.hasOwnProperty('language') ? requestPart['language'] : this.searchRequest.language;
+    this.searchRequest.filt = requestPart.hasOwnProperty('filt') ? requestPart['filt'] : this.searchRequest.filt;
+    this.searchRequest.pageNumber = requestPart['pageNumber'] || this.searchRequest.pageNumber;
+    this.initProjectsFromObservable(this.searchRequest);
   }
 
   private initProjectsFromObservable(filter: ProjectSearchRequest) {
-    const temp = [];
-    this.projectService.search(filter)
-      .subscribe(
-        params => temp.push(params),
-        error => console.error(error)
-      );
-
-    this.projects = temp;
+    this.projects = this.projectService.search(filter);
   }
 }

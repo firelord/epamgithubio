@@ -9,7 +9,7 @@
         </div>
       </div>
       <hr />
-      <p class="card-text">{{project.description}}</p>
+      <p class="card-text" [innerHtml]="project.description | async">{{project.description | async}}</p>
       <button class="btn" (click)="onClick()">
         View github page
       </button>

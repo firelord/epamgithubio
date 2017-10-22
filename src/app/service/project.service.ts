@@ -5,43 +5,93 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/toArray';
+import 'rxjs/add/operator/count';
 import 'rxjs/add/operator/publishReplay';
-import {Headers, Http, RequestMethod} from '@angular/http';
-import {Request} from '@angular/http';
+import {Headers, Http, Request, RequestMethod} from '@angular/http';
+import marky from 'marky-markdown';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
 
-  projects: Observable<Project>;
-
-  constructor(private http: Http) {
-    const request = new Request({url: 'https://api.github.com/orgs/epam/repos'});
-    request.method = RequestMethod.Get;
-
-    request.headers = new Headers({'content-type': 'application/json'});
-    this.projects = this.http.request(request).map(response => response.json())
-      .publishReplay(3)
-      .refCount()
-      .flatMap(item => item)
-      .map(item => new Project(item['id'], item['name'], item['description'], item['language'], item['html_url']));
+  constructor(private http: Http, private sanitizer: DomSanitizer) {
   }
 
-  search({language, text}): Observable<Project> {
-    let result = this.projects;
-    const textInLowerCase = text.toLowerCase();
+  search({language, filt, pageNumber}): Observable<Project[]> {
+    let queryParam = `q=org:epam+${filt}+in:name+in:readme`;
 
-    result = (text == null || text === '')
-      ? result
-      : result.filter(item => {
-        return item.name.toLowerCase().indexOf(textInLowerCase) !== -1 ||
-          (item.description != null && item.description.toLowerCase().indexOf(textInLowerCase) !== -1);
+    if (language)
+      queryParam += `+language=${language}`;
+
+    this.http.get(`/orgs/EPAM/README.md`)
+      .map(it => it.text())
+      .subscribe(
+        it => this._processText(it)
+      );
+
+    const request = new Request({url: '/orgs/epam/repos', params: queryParam});
+    request.method = RequestMethod.Get;
+    request.headers = new Headers({'content-type': 'application/json'});
+
+    return this.http.request(request)
+      .map(resp => resp.json())
+      // .map(resp => resp.json()['items'])
+      .flatMap(it => it)
+      .map(item => new Project(
+        item['id'],
+        item['name'],
+        this._requestMd(item['name']),
+        item['language'],
+        item['html_url']))
+      .toArray();
+  }
+
+  private _requestMd(repoName: string): Observable<string> {
+    // return this.http.get(`/orgs/EPAM/README.md`)
+    return this.http.get(`https://raw.githubusercontent.com/epam/${repoName}/master/README.md`)
+      .map(it => it.text())
+      .map(it => this._processText(it))
+      .map(it => this.sanitizer.bypassSecurityTrustHtml(marky(it)));
+  }
+
+  private _processText(text: string) {
+    const strings = text.split('\n')
+      .map(it => it.replace(/&nbsp;/g, ''))
+      .map(it => it.trim())
+      .filter(it =>
+        !it.startsWith('=') &&
+        !it.startsWith('![') &&
+        !it.startsWith('#') &&
+        !it.startsWith('|') &&
+        !it.startsWith('--') &&
+        !it.startsWith('['));
+
+    const excludedLines = this._findLinesOfCode(strings);
+
+    strings.filter((value, index) => excludedLines.indexOf(index) !== -1);
+
+    const result = strings.join('\n');
+    return result.length > 300 ? result.substring(0, 300) + '...' : result;
+  }
+
+  private _findLinesOfCode(strings: string[]): Array<number> {
+    const codeLineIndexes = [];
+    strings.forEach(
+      (str, index) => {
+        if (str.startsWith('```'))
+          codeLineIndexes.push(index);
       });
 
-    result = (language == null || language === '')
-      ? result
-      : result.filter(item => item.language != null && item.language.toLowerCase() === language.toLowerCase());
+    const result = Array<number>();
+
+    for (let _i = 0; _i < codeLineIndexes.length || ((_i + 1) === codeLineIndexes.length); _i = _i + 2)
+      for (let _j = codeLineIndexes[_i]; _j <= codeLineIndexes[_i + 1]; _j++)
+        result.push(_j);
 
     return result;
   }

@@ -14,11 +14,6 @@ export class SearchProjectComponent implements OnInit {
   searchInput: FormControl = new FormControl('');
   languageSelect: FormControl = new FormControl('');
 
-  searchRequest: ProjectSearchRequest = {
-    language: '',
-    text: ''
-  };
-
   languages = [
     {name: 'Any Language', value: ''},
     {name: 'Java', value: 'java'},
@@ -39,13 +34,10 @@ export class SearchProjectComponent implements OnInit {
 
   ngOnInit() {
     this.languageSelect.valueChanges
-      .do(value => this.searchRequest.language = value)
-      .subscribe(() => this.projectService.searchEvent.emit(this.searchRequest));
+      .subscribe((value) => this.projectService.searchEvent.emit({language: value}));
 
     this.searchInput.valueChanges
       .debounceTime(500)
-      .do(value => this.searchRequest.text = value)
-      .subscribe(value => this.projectService.searchEvent.emit(this.searchRequest));
+      .subscribe(value => this.projectService.searchEvent.emit({filt: value}));
   }
-
 }

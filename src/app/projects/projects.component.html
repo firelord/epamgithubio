@@ -3,7 +3,7 @@
     <epamghio-search-project></epamghio-search-project>
 
     <div class="row">
-      <div *ngFor="let project of projects;" class="col-md-6">
+      <div *ngFor="let project of projects | async;" class="col-md-6">
         <epamghio-project-item [project]="project"></epamghio-project-item>
       </div>
     </div>
