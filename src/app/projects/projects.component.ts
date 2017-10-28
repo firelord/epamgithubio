@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Project} from '../model/Project';
 import {Observable} from 'rxjs/Observable';
 import {ProjectService} from '../service/project.service';
@@ -18,9 +18,12 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.projectService.searchEvent.subscribe(request => {
-      console.log(request);
       this.projects = this.projectService.search(request).publishReplay(1).refCount();
       this.count = this.projects.flatMap(it => it).count(it => true);
+    });
+
+    this.projectService.activeProjectEvent.subscribe(projectName => {
+      console.log(`Current project name => ${projectName}`);
     });
   }
 }

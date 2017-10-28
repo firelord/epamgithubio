@@ -13,7 +13,10 @@
     <span class="language">{{project.language}}</span>
     <span class="separator"></span>
     <span class="licence">{{project.licence}}</span>
-    <span class="more-or-less-label">More</span>
+    <div class="more-or-less-block" (click)="selectBlock(project.name)">
+      <span class="more-or-less-label">More</span>
+      <i class="more-or-less-icon"></i>
+    </div>
   </div>
 </div>
 

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Project} from '../model/Project';
+import {ProjectService} from "../service/project.service";
 
 @Component({
   selector: 'epamghio-project-item',
@@ -10,13 +11,14 @@ export class ProjectItemComponent implements OnInit {
 
   @Input() project: Project;
 
-  constructor() { }
+  constructor(private projectService: ProjectService) {
+  }
 
   ngOnInit() {
 
   }
 
-  onClick() {
-
+  selectBlock(projectName: string) {
+    this.projectService.activeProjectEvent.emit(projectName);
   }
 }

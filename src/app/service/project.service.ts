@@ -20,6 +20,7 @@ import {CategoryService} from './category.service';
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
+  activeProjectEvent: EventEmitter<string> = new EventEmitter();
 
   constructor(private http: Http,
               private categoryService: CategoryService,

@@ -1,15 +1,14 @@
 .projects {
   margin-top: 60px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: 55px;
+  margin-right: 55px;
 }
 
 .project-count {
   height: 23px;
   width: 298px;
   color: #6B6D6F;
-  font-family: Source Sans Pro;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 23px;
   margin-bottom: 25px;
   display: block;

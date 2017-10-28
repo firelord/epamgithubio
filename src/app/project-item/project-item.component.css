@@ -1,9 +1,8 @@
 .project-item {
-  font-family: "Source Sans Pro";
-  word-wrap: break-word;
-  border-radius: 4px;
+  box-sizing: border-box;
+  height: 240px;
+  border: 1px solid rgba(204, 204, 204, 0.55);
   background-color: #FFFFFF;
-  box-shadow: 0 2px 4px 0 rgba(155, 155, 155, 0.65);
   margin-bottom: 30px;
 }
 
@@ -18,7 +17,7 @@
 
 .name {
   color: #38C2D7;
-  font-size: 18px; /* todo:xxx in order to full text stays in header */
+  font-size: 16px; /* todo:xxx in order to full text stays in header */
   font-weight: 600;
   line-height: 31px;
 }
@@ -83,18 +82,37 @@
   line-height: 20px;
 }
 
+.more-or-less-block {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  justify-content: flex-end;
+  flex-grow: 2;
+}
+
+.more-or-less-block:hover .more-or-less-label {
+  color: #38C2D7; /* todo */
+}
+
+.more-or-less-block:hover .more-or-less-icon {
+  background: url('../../assets/ic_arrow_down_hovered@2x.svg');
+}
+
 .more-or-less-label {
+  text-align: right;
+  padding-right: 4px;
+  cursor: pointer;
   color: #666666;
   font-size: 16px;
   line-height: 20px;
-  align-self: flex-end;
-  flex-grow: 2;
-  text-align: right;
-  cursor: pointer;
 }
 
-.more-or-less-label:hover {
-  color: #38C2D7; /* todo */
+.more-or-less-icon {
+  width: 22px;
+  height: 22px;
+  color: #666666;
+  text-align: right;
+  background: url('../../assets/ic_arrow_down_def@2x.svg');
 }
 
 /* Language colors */
@@ -109,27 +127,35 @@
 .lang-label {
   background-color: #f34b7d;
 }
+
 .lang-label.Java {
   background-color: #b07219;
 }
+
 .lang-label.JavaScript {
   background-color: #f1e05a;
 }
+
 .lang-label.PHP {
   background-color: #4F5D95;
 }
+
 .lang-label.HTML {
   background-color: #e34c26;
 }
+
 .lang-label.Python {
   background-color: #3572A5;
 }
+
 .lang-label.CSS {
   background-color: #563d7c;
 }
+
 .lang-label.C {
   background-color: #f34b7d;
 }
+
 .lang-label.Objective-C {
   background-color: #438eff;
 }
