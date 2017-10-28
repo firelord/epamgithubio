@@ -9,21 +9,30 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/count';
+import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/publishReplay';
 import {Headers, Http, Request, RequestMethod} from '@angular/http';
 import marky from 'marky-markdown';
 import {DomSanitizer} from '@angular/platform-browser';
+import {CategoryService} from './category.service';
 
 
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: Http, private sanitizer: DomSanitizer) {
+  constructor(private http: Http,
+              private categoryService: CategoryService,
+              private sanitizer: DomSanitizer) {
+    this.searchEvent.scan((acc, curr) => Object.assign({}, acc, curr), {});
   }
 
-  search({language, filt, pageNumber}): Observable<Project[]> {
-    let queryParam = `q=org:epam+${filt}+in:name+in:readme`;
+  search(searchObject): Observable<Project[]> {
+    const filter = searchObject.filter || '';
+    const language = searchObject.language || '';
+    const category = searchObject.category || 0;
+
+    let queryParam = `q=org:epam+${filter}+in:name+in:readme`;
 
     if (language)
       queryParam += `+language=${language}`;
@@ -35,19 +44,22 @@ export class ProjectService {
       );
 
     const request = new Request({url: '/orgs/epam/repos', params: queryParam});
+    // const request = new Request({url: 'https://api.github.com/search/repositories', params: queryParam});
     request.method = RequestMethod.Get;
     request.headers = new Headers({'content-type': 'application/json'});
 
     return this.http.request(request)
-      .map(resp => resp.json())
-      // .map(resp => resp.json()['items'])
+      .map(resp => resp.json()['items'])
       .flatMap(it => it)
       .map(item => new Project(
         item['id'],
         item['name'],
-        this._requestMd(item['name']),
+        this.categoryService.getCategory(item['name']),
         item['language'],
-        item['html_url']))
+        'Apache-2.0',
+        item['description'])
+      )
+      .filter(it => this.categoryService.relatesToCategory(it.name, category))
       .toArray();
   }
 

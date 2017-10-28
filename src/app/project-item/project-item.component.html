@@ -1,19 +1,19 @@
-<section class="project-item" id="projects">
-  <div class="card">
-    <div class="card-body">
-      <div>
-        <h5 class="card-title">{{project.name}}</h5>
-        <div class="card-subtitle text-muted language-block" *ngIf="project.language">
-          <span class="color-label {{project.language}}"></span>
-          <span class="language-{{project.language}}">{{project.language}}</span>
-        </div>
-      </div>
-      <hr />
-      <p class="card-text" [innerHtml]="project.description | async">{{project.description | async}}</p>
-      <button class="btn" (click)="onClick()">
-        View github page
-      </button>
-    </div>
+<div class="project-item">
+  <div class="header">
+    <a href="#" class="name">{{project.name}}</a>
+    <span class="category">{{project.category}}</span>
   </div>
-</section>
+  <div class="description">
+    <p>
+      {{project.description}}
+    </p>
+  </div>
+  <div class="footer">
+    <span class="lang-label {{project.language}}"></span>
+    <span class="language">{{project.language}}</span>
+    <span class="separator"></span>
+    <span class="licence">{{project.licence}}</span>
+    <span class="more-or-less-label">More</span>
+  </div>
+</div>
 

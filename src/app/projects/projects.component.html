@@ -1,11 +1,10 @@
-<section id="projects" class="content-section">
-  <div class="container">
-    <epamghio-search-project></epamghio-search-project>
-
-    <div class="row">
-      <div *ngFor="let project of projects | async;" class="col-md-6">
-        <epamghio-project-item [project]="project"></epamghio-project-item>
-      </div>
+<div class="projects">
+  <span class="project-count">
+    <b>{{count | async}}</b> projects
+  </span>
+  <div class="row">
+    <div *ngFor="let project of projects | async;" class="col-md-4">
+      <epamghio-project-item [project]="project"></epamghio-project-item>
     </div>
   </div>
-</section>
+</div>

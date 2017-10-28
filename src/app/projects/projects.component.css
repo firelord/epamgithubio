@@ -1,6 +1,16 @@
-section {
-  padding-top: 0;
-  padding-bottom: 0;
-  min-height: 40rem;
+.projects {
+  margin-top: 60px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
+.project-count {
+  height: 23px;
+  width: 298px;
+  color: #6B6D6F;
+  font-family: Source Sans Pro;
+  font-size: 18px;
+  line-height: 23px;
+  margin-bottom: 25px;
+  display: block;
+}

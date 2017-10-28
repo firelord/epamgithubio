@@ -1,0 +1,21 @@
+.main-menu {
+  height: 70px;
+  background-color: rgba(236,237,238,0.8);
+  padding-left: 100px;
+  padding-right: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: #6B6D6F;
+  font-family: "Source Sans Pro";
+  font-size: 18px;
+  line-height: 23px;
+  margin-right: 38px;
+}
+
+.active.link {
+  text-decoration: underline;
+  color: rgba(107,109,111,0.5);
+}

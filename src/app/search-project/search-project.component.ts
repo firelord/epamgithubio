@@ -38,6 +38,6 @@ export class SearchProjectComponent implements OnInit {
 
     this.searchInput.valueChanges
       .debounceTime(500)
-      .subscribe(value => this.projectService.searchEvent.emit({filt: value}));
+      .subscribe(value => this.projectService.searchEvent.emit({filter: value}));
   }
 }

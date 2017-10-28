@@ -8,24 +8,31 @@ import {Ng2Webstorage} from 'ng2-webstorage';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
-import { IntroHeaderComponent } from './intro-header/intro-header.component';
 import { AboutComponent } from './about/about.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
 import { SearchProjectComponent } from './search-project/search-project.component';
 import {ProjectService} from './service/project.service';
 import {RouterModule} from '@angular/router';
+import { HeaderComponent } from './header/header.component';
+import { SearchComponent } from './search/search.component';
+import { CategoryBlockComponent } from './category-block/category-block.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
+import {CategoryService} from "./service/category.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    IntroHeaderComponent,
     AboutComponent,
     ProjectsComponent,
     ProjectItemComponent,
-    SearchProjectComponent
+    SearchProjectComponent,
+    HeaderComponent,
+    SearchComponent,
+    CategoryBlockComponent,
+    MainMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +46,7 @@ import {RouterModule} from '@angular/router';
     Ng2Webstorage.forRoot({prefix: 'epamghio', separator: '-'}),
     HttpModule
   ],
-  providers: [ProjectService],
+  providers: [ProjectService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
