@@ -26,7 +26,6 @@ export class MainMenuComponent implements OnInit {
 
   chooseActiveCategory(event, categoryStr: string) {
     const category = parseInt(categoryStr, 10);
-    console.log(typeof category);
     event.preventDefault();
     this.activeCategory = category;
     this.projectService.searchEvent.emit({category: category});

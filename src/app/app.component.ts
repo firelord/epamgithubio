@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import 'rxjs/add/operator/findIndex';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +9,7 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  page: number;
-  constructor(private route: ActivatedRoute) {
+  constructor() {
   }
 
   ngOnInit(): void {

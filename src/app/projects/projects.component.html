@@ -3,7 +3,18 @@
     <b>{{count | async}}</b> PROJECTS
   </span>
   <div class="row">
-    <div *ngFor="let project of projects | async;" class="col-md-4">
+    <div *ngFor="let project of firstProjects | async;" class="col-md-4">
+      <epamghio-project-item
+        [activeProject]="project.name === activeProjectName"
+        [project]="project"></epamghio-project-item>
+    </div>
+
+    <epamghio-project-detail-info
+      *ngIf="activeProjectName !== ''"
+      class="col-md-12"
+      [projectObs$]="activeProject">
+    </epamghio-project-detail-info>
+    <div *ngFor="let project of secondProjects | async;" class="col-md-4">
       <epamghio-project-item [project]="project"></epamghio-project-item>
     </div>
   </div>

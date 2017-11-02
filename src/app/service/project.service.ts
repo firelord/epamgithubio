@@ -15,6 +15,7 @@ import {Headers, Http, Request, RequestMethod} from '@angular/http';
 import marky from 'marky-markdown';
 import {DomSanitizer} from '@angular/platform-browser';
 import {CategoryService} from './category.service';
+import {Language} from '../model/Language';
 
 
 @Injectable()
@@ -52,21 +53,27 @@ export class ProjectService {
     return this.http.request(request)
       .map(resp => resp.json()['items'])
       .flatMap(it => it)
-      .map(item => new Project(
-        item['id'],
-        item['name'],
-        this.categoryService.getCategory(item['name']),
-        item['language'],
-        'Apache-2.0',
-        item['description'])
-      )
+      .map(it => {
+        return {
+          id: it['id'],
+          name: it['name'],
+          category: this.categoryService.getCategory(it['name']),
+          language: it['language'],
+          licence: 'Apache-2.0',
+          description: it['description'],
+          githubUrl: it['html_url'],
+          updatedAt: it['updated_at'],
+          forkCount: it['forks_count'],
+          issueCount: it['open_issues_count']
+        };
+      })
       .filter(it => this.categoryService.relatesToCategory(it.name, category))
       .toArray();
   }
 
   private _requestMd(repoName: string): Observable<string> {
-    // return this.http.get(`/orgs/EPAM/README.md`)
-    return this.http.get(`https://raw.githubusercontent.com/epam/${repoName}/master/README.md`)
+    return this.http.get(`/orgs/EPAM/README.md`)
+    // return this.http.get(`https://raw.githubusercontent.com/epam/${repoName}/master/README.md`)
       .map(it => it.text())
       .map(it => this._processText(it))
       .map(it => this.sanitizer.bypassSecurityTrustHtml(marky(it)));
@@ -88,8 +95,7 @@ export class ProjectService {
 
     strings.filter((value, index) => excludedLines.indexOf(index) !== -1);
 
-    const result = strings.join('\n');
-    return result.length > 300 ? result.substring(0, 300) + '...' : result;
+    return strings.join('\n');
   }
 
   private _findLinesOfCode(strings: string[]): Array<number> {
@@ -108,4 +114,85 @@ export class ProjectService {
 
     return result;
   }
+
+  getProjectDetailInfo(project: Project) {
+    return {
+      id: project.id,
+      name: project.name,
+      githubUrl: project.githubUrl,
+      readMe: Observable.empty(),
+      lastUpdated: Observable.empty(),
+      languages: this.getLanguages(project.name),
+      licence: '',
+      commitCount: this.getCommitCount(project.name),
+      contributorCount: this.getContributorCount(project.name),
+      forkCount: project.forkCount,
+      issueCount: project.issueCount
+    };
+  }
+
+  private getCommitCount(repoName: string): Observable<number> {
+    return this.http.get(`https://api.github.com/repos/epam/${repoName}/commits`)
+      .map(resp => resp.json())
+      .flatMap(it => it)
+      .count(it => true);
+  }
+
+  private getContributorCount(repoName: string): Observable<number> {
+    return this.http.get(`https://api.github.com/repos/epam/${repoName}/contributors`)
+      .map(resp => resp.json())
+      .flatMap(it => it)
+      .count(it => true);
+  }
+
+  private getLanguages(repoName: string): Observable<Language[]> {
+    return this.http.get(`/languages`)
+      .map(resp => resp.json())
+      .map(it => this.processLanguagesObject(it));
+  }
+
+  private processLanguagesObject(langJson: object): Language[] {
+    let nameWithNumbers = Object.keys(langJson)
+      .map(name => new NameWithNumber(name, langJson[name]));
+
+    const sum = nameWithNumbers
+      .reduce((result, nameWithNumber) => result + nameWithNumber.num, 0);
+
+    nameWithNumbers = this.shortLanguagesListIfNeeded(nameWithNumbers);
+
+    return this.getPercentOfCodeFromLinesOfCode(nameWithNumbers, sum);
+  }
+
+  private getPercentOfCodeFromLinesOfCode(nameWithNumbers: NameWithNumber[], sum: number): Language[] {
+    const languages = [];
+    let tempSumInPercent = 0.0;
+    let index = 0;
+    const lastIndex = nameWithNumbers.length - 1;
+    nameWithNumbers.forEach(it => {
+      const percent = (lastIndex === index)
+        ? (100 - tempSumInPercent)
+        : (Math.trunc((it.num * 100 / sum) * 100) / 100);
+
+      tempSumInPercent += percent;
+      languages.push(new Language(it.name, percent));
+      index++;
+    });
+
+    return languages;
+  }
+
+  private shortLanguagesListIfNeeded(nameWithNumbers: NameWithNumber[]): NameWithNumber[] {
+    return nameWithNumbers.length > 3
+      ? nameWithNumbers.slice(0, 3).concat(new NameWithNumber(
+        'Others',
+        nameWithNumbers.slice(3).reduce((acc, it) => acc + it.num, 0)))
+      : nameWithNumbers;
+  }
 }
+
+class NameWithNumber {
+  constructor(public name: string, public num: number) {
+  }
+}
+
+

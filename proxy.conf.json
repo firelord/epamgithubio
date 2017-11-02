@@ -2,5 +2,9 @@
   "/orgs": {
     "target": "http://localhost:8000",
     "secure": false
+  },
+  "/languages": {
+    "target": "http://localhost:8000",
+    "secure": false
   }
 }

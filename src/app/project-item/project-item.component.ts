@@ -8,7 +8,7 @@ import {ProjectService} from "../service/project.service";
   styleUrls: ['./project-item.component.css']
 })
 export class ProjectItemComponent implements OnInit {
-
+  @Input() activeProject = false;
   @Input() project: Project;
 
   constructor(private projectService: ProjectService) {

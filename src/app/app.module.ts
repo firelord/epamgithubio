@@ -18,7 +18,8 @@ import { HeaderComponent } from './header/header.component';
 import { SearchComponent } from './search/search.component';
 import { CategoryBlockComponent } from './category-block/category-block.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-import {CategoryService} from "./service/category.service";
+import {CategoryService} from './service/category.service';
+import { ProjectDetailInfoComponent } from './project-detail-info/project-detail-info.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {CategoryService} from "./service/category.service";
     HeaderComponent,
     SearchComponent,
     CategoryBlockComponent,
-    MainMenuComponent
+    MainMenuComponent,
+    ProjectDetailInfoComponent
   ],
   imports: [
     BrowserModule,

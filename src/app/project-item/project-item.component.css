@@ -46,7 +46,7 @@
   display: -webkit-box;
   max-width: 400px;
   height: 75px;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   line-height: 24px;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -88,6 +88,7 @@
   align-self: flex-end;
   justify-content: flex-end;
   flex-grow: 2;
+  cursor: pointer;
 }
 
 .more-or-less-block:hover .more-or-less-label {
@@ -95,13 +96,12 @@
 }
 
 .more-or-less-block:hover .more-or-less-icon {
-  background: url('../../assets/ic_arrow_down_hovered@2x.svg');
+  fill: #38C2D7;
 }
 
 .more-or-less-label {
   text-align: right;
-  padding-right: 4px;
-  cursor: pointer;
+  padding-right: 4px;;
   color: #666666;
   font-size: 16px;
   line-height: 20px;
@@ -110,52 +110,4 @@
 .more-or-less-icon {
   width: 22px;
   height: 22px;
-  color: #666666;
-  text-align: right;
-  background: url('../../assets/ic_arrow_down_def@2x.svg');
-}
-
-/* Language colors */
-
-.lang-label {
-  height: 14px;
-  width: 14px;
-  border-radius: 30px;
-  background-color: red;
-}
-
-.lang-label {
-  background-color: #f34b7d;
-}
-
-.lang-label.Java {
-  background-color: #b07219;
-}
-
-.lang-label.JavaScript {
-  background-color: #f1e05a;
-}
-
-.lang-label.PHP {
-  background-color: #4F5D95;
-}
-
-.lang-label.HTML {
-  background-color: #e34c26;
-}
-
-.lang-label.Python {
-  background-color: #3572A5;
-}
-
-.lang-label.CSS {
-  background-color: #563d7c;
-}
-
-.lang-label.C {
-  background-color: #f34b7d;
-}
-
-.lang-label.Objective-C {
-  background-color: #438eff;
 }

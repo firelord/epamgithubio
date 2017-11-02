@@ -14,8 +14,18 @@
     <span class="separator"></span>
     <span class="licence">{{project.licence}}</span>
     <div class="more-or-less-block" (click)="selectBlock(project.name)">
-      <span class="more-or-less-label">More</span>
-      <i class="more-or-less-icon"></i>
+      <span *ngIf="activeProject" class="more-or-less-label">Less</span>
+      <svg *ngIf="activeProject" class="more-or-less-icon">
+        <path
+          d="M14,12 L9,12 L9,12 C8.44771525,12 8,12.4477153 8,13 C8,13.5522847 8.44771525,14 9,14 L15,14 C15.2761424,14 15.5261424,13.8880712 15.7071068,13.7071068 C15.8880712,13.5261424 16,13.2761424 16,13 L16,7 C16,6.44771525 15.5522847,6 15,6 C14.4477153,6 14,6.44771525 14,7 L14,7 L14,12 Z"
+          transform="translate(12.000000, 10.000000) rotate(225.000000) translate(-12.000000, -15.000000) "></path>
+      </svg>
+      <span *ngIf="!activeProject" class="more-or-less-label">More</span>
+      <svg *ngIf="!activeProject" class="more-or-less-icon">
+        <path
+          d="M14,12 L9,12 L9,12 C8.44771525,12 8,12.4477153 8,13 C8,13.5522847 8.44771525,14 9,14 L15,14 C15.2761424,14 15.5261424,13.8880712 15.7071068,13.7071068 C15.8880712,13.5261424 16,13.2761424 16,13 L16,7 C16,6.44771525 15.5522847,6 15,6 C14.4477153,6 14,6.44771525 14,7 L14,7 L14,12 Z"
+          transform="translate(12.000000, 10.000000) rotate(45.000000) translate(-12.000000, -10.000000) "></path>
+      </svg>
     </div>
   </div>
 </div>

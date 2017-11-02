@@ -1,0 +1,105 @@
+.project-detail-info {
+  padding: 35px;
+  box-sizing: border-box;
+  border: 1px solid rgba(204, 204, 204, 0.55);
+  background-color: #FFFFFF;
+  margin-bottom: 35px;
+}
+
+.header {
+  color: #6B6D6F;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 31px;
+  margin-bottom: 16px;
+}
+
+.link-to-github {
+  display: block;
+  margin-bottom: 34px;
+  color: #38C2D7;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.description {
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(204, 204, 204, 0.55);
+  padding-right: 100px;
+}
+
+.description-text {
+  color: #999999;
+  font-size: 16px;
+  line-height: 25px;
+  margin-bottom: 16px;
+}
+
+.right-block {
+  padding-left: 34px;
+  border-left: 1px solid rgba(204, 204, 204, 0.55);
+}
+
+.languages-label, .updated-label {
+  font-size: 16px;
+  line-height: 20px;
+  color: #999999;
+}
+
+.updated-label {
+  margin-top: 34px;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.updated {
+  color: #6B6D6F;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+ol {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.lang-label {
+  margin-right: 13px;
+}
+
+.full-description-link {
+  color: #666666;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.footer {
+  padding-top: 23px;
+}
+
+.footer .number {
+  color: #666666;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.footer .characteristic {
+  color: #666666;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 100;
+}
+
+.separator {
+  width: 2px;
+  border: 1px solid #CCCCCC;
+  box-sizing: border-box;
+  height: 10px;
+  margin-left: 35px;
+  margin-right: 33px;
+}
