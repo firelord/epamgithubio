@@ -15,27 +15,35 @@
 }
 
 .link-to-github {
-  display: block;
-  margin-bottom: 34px;
   color: #38C2D7;
   font-size: 14px;
   line-height: 18px;
 }
 
-.description {
-  padding-bottom: 40px;
-  border-bottom: 1px solid rgba(204, 204, 204, 0.55);
-  padding-right: 100px;
+.center-block {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.empty-block {
+  flex: 0 0 100px;
 }
 
 .description-text {
+  margin-top: 34px;
   color: #999999;
   font-size: 16px;
   line-height: 25px;
   margin-bottom: 16px;
 }
 
+.description {
+  border-bottom: 1px solid rgba(204, 204, 204, 0.55);
+}
+
 .right-block {
+  flex: 0 0 300px;
   padding-left: 34px;
   border-left: 1px solid rgba(204, 204, 204, 0.55);
 }

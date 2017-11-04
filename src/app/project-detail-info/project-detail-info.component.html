@@ -1,17 +1,19 @@
 <div class="col-md-12 project-detail-info">
   <div class="header">{{detail.name}}</div>
-  <div class="row">
-    <div class="col-md-9 description">
+  <div class="center-block">
+    <div class="description">
       <a href="{{detail.githubUrl}}" class="link-to-github">{{detail.githubUrl}}</a>
       <p class="description-text">
-        New Genome Browser (NGB) - a Web - based NGS data viewer with unique Structural Variations (SVs) visualization
+        New Genome Browser (NGB) - a Web - based NGS data viewer with unique Structural Variations (SVs)
+        visualization
         capabilities, high performance, scalability, and cloud data support
       </p>
       <div class="full-description-link">
         <span>Full Description</span>
       </div>
     </div>
-    <div class="col-md-3 right-block">
+    <div class="empty-block"></div>
+    <div class="right-block">
       <span class="languages-label">LANGUAGES:</span>
       <ol>
         <li *ngFor="let language of detail.languages | async">
@@ -39,3 +41,4 @@
     <span class="characteristic"> Forks</span>
   </div>
 </div>
+

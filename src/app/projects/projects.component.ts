@@ -52,7 +52,7 @@ export class ProjectsComponent implements OnInit {
       .concat(this.secondProjects.flatMap(it => it));
   }
 
-  private getActiveProject(allProjects$, projectName): Observable<Project> {
+  private getActiveProject(allProjects$, projectName): Observable<ProjectDetailInfo> {
     if (projectName === '')
       return null;
 

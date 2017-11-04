@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Component, OnInit} from '@angular/core';
 import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
 import {ProjectService} from "../service/project.service";
 
@@ -16,9 +15,8 @@ export class ProjectDetailInfoComponent implements OnInit {
 
   ngOnInit() {
     this.detail = this.projectService.projectSelectedEvent.subscribe(
-      it => {
-        console.log(it);
-        this.detail = this.projectService.getProjectDetailInfo(it);
+      project => {
+        this.detail = project;
       }
     );
   }

@@ -17,13 +17,14 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {CategoryService} from './category.service';
 import {Language} from '../model/Language';
 import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
+import * as moment from 'moment';
 
 
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
   activeProjectEvent: EventEmitter<string> = new EventEmitter();
-  projectSelectedEvent: EventEmitter<Project> = new EventEmitter();
+  projectSelectedEvent: EventEmitter<ProjectDetailInfo> = new EventEmitter();
 
   constructor(private http: Http,
               private categoryService: CategoryService,
@@ -118,12 +119,13 @@ export class ProjectService {
   }
 
   getProjectDetailInfo(project: Project): ProjectDetailInfo {
+    console.log(project);
     return new ProjectDetailInfo(
       project.id,
       project.name,
       project.githubUrl,
       Observable.empty(),
-      Observable.empty(),
+      moment(project.updatedAt).format('on MMM DD, YYYY'),
       this.getLanguages(project.name),
       '',
       this.getCommitCount(project.name),
