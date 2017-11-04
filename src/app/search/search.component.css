@@ -1,17 +1,39 @@
 .search {
+  background-image: url("../../assets/epam-background.png");
+  background-size: cover;
   padding-top: 85px;
   padding-bottom: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f6f7f7;
+}
+
+.header-text {
+  width: 1100px;
+  color: #FFFFFF;
+  font-family: Oswald;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  text-align: center;
+  text-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  margin-bottom: 24px;
+}
+
+.subheader-text {
+  font-weight: 100;
+  width: 670px;
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 23px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .intro-text {
   width: 710px;
   padding-bottom: 35px;
   color: #6B6D6F;
-  font-family: "Source Sans Pro";
   font-size: 16px;
   letter-spacing: 1px;
   line-height: 25px;

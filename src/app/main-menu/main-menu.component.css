@@ -1,10 +1,18 @@
+.menu-wrapper {
+  padding: 34px 0;
+  margin: 0 55px;
+  border-bottom: 1px solid rgba(204,204,204,0.55);
+}
+
 .main-menu {
-  height: 70px;
-  background-color: rgba(236, 237, 238, 0.8);
-  padding-left: 55px;
-  padding-right: 55px;
+  height: 36px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.floating-empty-block {
+  flex-grow: 2;
 }
 
 .link {
@@ -20,4 +28,27 @@
   color: #464547;
   font-weight: 600;
   border-bottom: 2px solid #38C2D7;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 7px solid #666666;
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 7px solid #666666;
+}
+
+.date-label {
+  color: #464547;
+  font-size: 16px;
+  line-height: 20px;
+  padding-right: 6px;
 }

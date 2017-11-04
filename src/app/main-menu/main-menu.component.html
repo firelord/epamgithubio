@@ -1,13 +1,20 @@
-<div class="main-menu">
-  <a *ngIf="activeCategory !== 0" href="#" class="link" (click)="chooseActiveCategory($event, 0)">
-    All
-  </a>
-  <span *ngIf="activeCategory === 0" class="active link">
+<div class="menu-wrapper">
+  <div class="main-menu">
+    <!--<div class="left-block">-->
+    <a *ngIf="activeCategory !== 0" href="#" class="link" (click)="chooseActiveCategory($event, 0)">
+      All
+    </a>
+    <span *ngIf="activeCategory === 0" class="active link">
     All
   </span>
-  <a href="#" *ngFor="let category of categories;"
-     ngClass="{{activeCategory == category.id ? 'active link' : 'link'}}"
-     (click)="chooseActiveCategory($event, category.id)">
-    {{category.name}}
-  </a>
+    <a href="#" *ngFor="let category of categories;"
+       ngClass="{{activeCategory == category.id ? 'active link' : 'link'}}"
+       (click)="chooseActiveCategory($event, category.id)">
+      {{category.name}}
+    </a>
+    <!--</div>-->
+    <div class="floating-empty-block"></div>
+    <span class="date-label">Date</span>
+    <div class="arrow-up"></div>
+  </div>
 </div>

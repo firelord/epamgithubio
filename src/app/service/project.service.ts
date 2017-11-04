@@ -42,12 +42,6 @@ export class ProjectService {
     if (language)
       queryParam += `+language=${language}`;
 
-    this.http.get(`/orgs/EPAM/README.md`)
-      .map(it => it.text())
-      .subscribe(
-        it => this._processText(it)
-      );
-
     const request = new Request({url: '/orgs/epam/repos', params: queryParam});
     // const request = new Request({url: 'https://api.github.com/search/repositories', params: queryParam});
     request.method = RequestMethod.Get;
@@ -96,9 +90,7 @@ export class ProjectService {
 
     const excludedLines = this._findLinesOfCode(strings);
 
-    strings.filter((value, index) => excludedLines.indexOf(index) !== -1);
-
-    return strings.join('\n');
+    return strings.filter((value, index) => excludedLines.indexOf(index) === -1).join('\n');
   }
 
   private _findLinesOfCode(strings: string[]): Array<number> {
@@ -109,6 +101,7 @@ export class ProjectService {
           codeLineIndexes.push(index);
       });
 
+    console.log(codeLineIndexes);
     const result = Array<number>();
 
     for (let _i = 0; _i < codeLineIndexes.length || ((_i + 1) === codeLineIndexes.length); _i = _i + 2)
@@ -124,7 +117,7 @@ export class ProjectService {
       project.id,
       project.name,
       project.githubUrl,
-      Observable.empty(),
+      this._requestMd(project.name),
       moment(project.updatedAt).format('on MMM DD, YYYY'),
       this.getLanguages(project.name),
       '',

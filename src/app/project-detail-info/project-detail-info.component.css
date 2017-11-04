@@ -30,7 +30,14 @@
   flex: 0 0 100px;
 }
 
+.description {
+  flex-grow: 2;
+  border-bottom: 1px solid rgba(204, 204, 204, 0.55);
+}
+
 .description-text {
+  max-height: 360px;
+  overflow: hidden;
   margin-top: 34px;
   color: #999999;
   font-size: 16px;
@@ -38,8 +45,9 @@
   margin-bottom: 16px;
 }
 
-.description {
-  border-bottom: 1px solid rgba(204, 204, 204, 0.55);
+.right-arrow {
+  width: 22px;
+  height: 22px;
 }
 
 .right-block {
@@ -80,10 +88,21 @@ li {
   margin-right: 13px;
 }
 
-.full-description-link {
+.full-description-block {
+  display: flex;
   color: #666666;
   font-size: 16px;
   line-height: 20px;
+  margin-bottom: 34px;
+  cursor: pointer;
+}
+
+.full-description-block:hover {
+  color: #38C2D7;
+}
+
+.full-description-block:hover svg {
+  fill: #38C2D7;
 }
 
 .footer {

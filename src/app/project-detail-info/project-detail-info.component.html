@@ -3,13 +3,19 @@
   <div class="center-block">
     <div class="description">
       <a href="{{detail.githubUrl}}" class="link-to-github">{{detail.githubUrl}}</a>
-      <p class="description-text">
-        New Genome Browser (NGB) - a Web - based NGS data viewer with unique Structural Variations (SVs)
-        visualization
-        capabilities, high performance, scalability, and cloud data support
-      </p>
-      <div class="full-description-link">
+      <div class="description-text">
+        <div [innerHtml]="detail.readMe | async">
+        </div>
+      </div>
+      <div class="full-description-block">
         <span>Full Description</span>
+        <svg class="right-arrow">
+          <path
+            d="M14,12 L9,12 L9,12 C8.44771525,12 8,12.4477153 8,13 C8,13.5522847 8.44771525,14 9,14 L15,14 C15.2761424,14 15.5261424,13.8880712 15.7071068,13.7071068 C15.8880712,13.5261424 16,13.2761424 16,13 L16,7 C16,6.44771525 15.5522847,6 15,6 C14.4477153,6 14,6.44771525 14,7 L14,7 L14,12 Z"
+            id="Combined-Shape-Copy"
+            transform="translate(12.000000, 10.000000) rotate(-45.000000) translate(-13.000000, -10.000000) ">
+          </path>
+        </svg>
       </div>
     </div>
     <div class="empty-block"></div>
