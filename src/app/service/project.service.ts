@@ -16,12 +16,14 @@ import marky from 'marky-markdown';
 import {DomSanitizer} from '@angular/platform-browser';
 import {CategoryService} from './category.service';
 import {Language} from '../model/Language';
+import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
 
 
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
   activeProjectEvent: EventEmitter<string> = new EventEmitter();
+  projectSelectedEvent: EventEmitter<Project> = new EventEmitter();
 
   constructor(private http: Http,
               private categoryService: CategoryService,
@@ -115,34 +117,38 @@ export class ProjectService {
     return result;
   }
 
-  getProjectDetailInfo(project: Project) {
-    return {
-      id: project.id,
-      name: project.name,
-      githubUrl: project.githubUrl,
-      readMe: Observable.empty(),
-      lastUpdated: Observable.empty(),
-      languages: this.getLanguages(project.name),
-      licence: '',
-      commitCount: this.getCommitCount(project.name),
-      contributorCount: this.getContributorCount(project.name),
-      forkCount: project.forkCount,
-      issueCount: project.issueCount
-    };
+  getProjectDetailInfo(project: Project): ProjectDetailInfo {
+    return new ProjectDetailInfo(
+      project.id,
+      project.name,
+      project.githubUrl,
+      Observable.empty(),
+      Observable.empty(),
+      this.getLanguages(project.name),
+      '',
+      this.getCommitCount(project.name),
+      this.getContributorCount(project.name),
+      project.forkCount,
+      project.issueCount
+    );
   }
 
-  private getCommitCount(repoName: string): Observable<number> {
-    return this.http.get(`https://api.github.com/repos/epam/${repoName}/commits`)
-      .map(resp => resp.json())
-      .flatMap(it => it)
-      .count(it => true);
+  private getCommitCount(repoName: string): Observable<string> {
+    // return this.http.get(`https://api.github.com/repos/epam/${repoName}/commits`)
+    //   .map(resp => resp.json())
+    //   .flatMap(it => it)
+    //   .count(it => true)
+    //   .map(it => it.toString());
+    return Observable.of('30');
   }
 
-  private getContributorCount(repoName: string): Observable<number> {
-    return this.http.get(`https://api.github.com/repos/epam/${repoName}/contributors`)
-      .map(resp => resp.json())
-      .flatMap(it => it)
-      .count(it => true);
+  private getContributorCount(repoName: string): Observable<string> {
+    // return this.http.get(`https://api.github.com/repos/epam/${repoName}/contributors`)
+    //   .map(resp => resp.json())
+    //   .flatMap(it => it)
+    //   .count(it => true)
+    // .map(it => it.toString());
+    return Observable.of('30');
   }
 
   private getLanguages(repoName: string): Observable<Language[]> {
@@ -170,7 +176,7 @@ export class ProjectService {
     const lastIndex = nameWithNumbers.length - 1;
     nameWithNumbers.forEach(it => {
       const percent = (lastIndex === index)
-        ? (100 - tempSumInPercent)
+        ? ((Math.trunc (100 - tempSumInPercent) * 100) / 100)
         : (Math.trunc((it.num * 100 / sum) * 100) / 100);
 
       tempSumInPercent += percent;

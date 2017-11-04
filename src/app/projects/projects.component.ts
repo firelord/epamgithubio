@@ -18,8 +18,7 @@ import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
 })
 export class ProjectsComponent implements OnInit {
   activeProjectName = '';
-  activeProject = Observable.empty();
-  project: ProjectDetailInfo;
+
   firstProjects: Observable<Project[]> = this.projectService.search({});
   secondProjects: Observable<Project[]> = Observable.empty();
   count = this.firstProjects.flatMap(it => it).count(it => true);
@@ -38,8 +37,12 @@ export class ProjectsComponent implements OnInit {
     this.projectService.activeProjectEvent.subscribe(projectName => {
       this.activeProjectName = this.activeProjectName === projectName ? '' : projectName;
       const allProjects$ = this.getAllProjects();
-      this.activeProject = this.getActiveProject(allProjects$, projectName);
       this.divideProjectsOnTwoParts(allProjects$, projectName);
+
+      this.getActiveProject(allProjects$, projectName)
+        .subscribe(
+          it => this.projectService.projectSelectedEvent.emit(it)
+        );
     });
   }
 

@@ -7,7 +7,7 @@ export class ProjectDetailInfo {
               public githubUrl: string,
               public readMe: Observable<string>,
               public lastUpdated: Observable<string>,
-              public languages: Language[],
+              public languages: Observable<Language[]>,
               public licence: string,
               public commitCount: Observable<string>,
               public contributorCount: Observable<string>,

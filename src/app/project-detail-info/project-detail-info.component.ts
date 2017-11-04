@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
+import {ProjectService} from "../service/project.service";
 
 @Component({
   selector: 'epamghio-project-detail-info',
@@ -8,16 +9,16 @@ import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
   styleUrls: ['./project-detail-info.component.css']
 })
 export class ProjectDetailInfoComponent implements OnInit {
-  @Input() projectObs$: Observable<ProjectDetailInfo>;
-  project: ProjectDetailInfo = null;
+  detail: ProjectDetailInfo = null;
 
-  constructor() {
+  constructor(private projectService: ProjectService) {
   }
 
   ngOnInit() {
-    this.projectObs$.subscribe(
+    this.detail = this.projectService.projectSelectedEvent.subscribe(
       it => {
-        this.project = it;
+        console.log(it);
+        this.detail = this.projectService.getProjectDetailInfo(it);
       }
     );
   }
