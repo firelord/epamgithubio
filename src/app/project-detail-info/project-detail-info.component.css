@@ -54,6 +54,10 @@
   flex: 0 0 300px;
   padding-left: 34px;
   border-left: 1px solid rgba(204, 204, 204, 0.55);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .languages-label, .updated-label {

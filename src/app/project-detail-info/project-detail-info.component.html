@@ -20,17 +20,21 @@
     </div>
     <div class="empty-block"></div>
     <div class="right-block">
-      <span class="languages-label">LANGUAGES:</span>
-      <ol>
-        <li *ngFor="let language of detail.languages | async">
-          <span class="lang-label small {{language.name}}"></span>
-          <span class="language">{{language.name}}</span>
-          <span class="language-percentage">{{language.percent}}%</span>
-        </li>
-      </ol>
-      <span class="updated-label">UPDATED:</span>
-      <br>
-      <span class="updated">{{detail.lastUpdated}}</span>
+      <div class="languages-block">
+        <span class="languages-label">LANGUAGES:</span>
+        <ol>
+          <li *ngFor="let language of detail.languages | async">
+            <span class="lang-label small {{language.name}}"></span>
+            <span class="language">{{language.name}}</span>
+            <span class="language-percentage">{{language.percent}}%</span>
+          </li>
+        </ol>
+      </div>
+      <div class="updated-at-block">
+        <span class="updated-label">UPDATED:</span>
+        <br>
+        <span class="updated">{{detail.lastUpdated}}</span>
+      </div>
     </div>
   </div>
   <div class="footer">
