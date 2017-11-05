@@ -29,7 +29,7 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
     this.projectService.searchEvent.subscribe(request => {
       this.activeProjectName = '';
-      this.firstProjects = this.projectService.search(request).publishReplay(1).refCount();
+      this.firstProjects = this.projectService.search(request);
       this.secondProjects = Observable.empty();
       this.count = this.firstProjects.flatMap(it => it).count(it => true);
     });

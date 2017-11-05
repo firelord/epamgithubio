@@ -65,7 +65,8 @@ export class ProjectService {
         };
       })
       .filter(it => this.categoryService.relatesToCategory(it.name, category))
-      .toArray();
+      .toArray()
+      .publishReplay(1).refCount();
   }
 
   private _requestMd(repoName: string): Observable<string> {
