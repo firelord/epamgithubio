@@ -23,19 +23,20 @@ import * as moment from 'moment';
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
+  search$ = this.searchEvent.scan((acc, curr) => Object.assign({}, acc, curr), {});
   activeProjectEvent: EventEmitter<string> = new EventEmitter();
   projectSelectedEvent: EventEmitter<ProjectDetailInfo> = new EventEmitter();
 
   constructor(private http: Http,
               private categoryService: CategoryService,
               private sanitizer: DomSanitizer) {
-    this.searchEvent.scan((acc, curr) => Object.assign({}, acc, curr), {});
   }
 
   search(searchObject): Observable<Project[]> {
     const filter = searchObject.filter || '';
     const language = searchObject.language || '';
     const category = searchObject.category || 0;
+    const sortOrder = searchObject.orderByAscUpdatedAt;
 
     let queryParam = `q=org:epam+${filter}+in:name+in:readme`;
 
@@ -46,6 +47,10 @@ export class ProjectService {
     // const request = new Request({url: 'https://api.github.com/search/repositories', params: queryParam});
     request.method = RequestMethod.Get;
     request.headers = new Headers({'content-type': 'application/json'});
+
+    const compareFn = sortOrder
+      ? ((a, b) => a.updatedAt.unix() - b.updatedAt.unix())
+      : ((a, b) => b.updatedAt.unix() - a.updatedAt.unix());
 
     return this.http.request(request)
       .map(resp => resp.json()['items'])
@@ -59,13 +64,14 @@ export class ProjectService {
           licence: 'Apache-2.0',
           description: it['description'],
           githubUrl: it['html_url'],
-          updatedAt: it['updated_at'],
+          updatedAt: moment(it['updated_at']),
           forkCount: it['forks_count'],
           issueCount: it['open_issues_count']
         };
       })
       .filter(it => this.categoryService.relatesToCategory(it.name, category))
       .toArray()
+      .map(it => it.sort(compareFn))
       .publishReplay(1).refCount();
   }
 
@@ -102,7 +108,6 @@ export class ProjectService {
           codeLineIndexes.push(index);
       });
 
-    console.log(codeLineIndexes);
     const result = Array<number>();
 
     for (let _i = 0; _i < codeLineIndexes.length || ((_i + 1) === codeLineIndexes.length); _i = _i + 2)
@@ -113,13 +118,12 @@ export class ProjectService {
   }
 
   getProjectDetailInfo(project: Project): ProjectDetailInfo {
-    console.log(project);
     return new ProjectDetailInfo(
       project.id,
       project.name,
       project.githubUrl,
       this._requestMd(project.name),
-      moment(project.updatedAt).format('on MMM DD, YYYY'),
+      project.updatedAt.format('on MMM DD, YYYY'),
       this.getLanguages(project.name),
       '',
       this.getCommitCount(project.name),
@@ -138,13 +142,13 @@ export class ProjectService {
     return Observable.of('30');
   }
 
-  private getContributorCount(repoName: string): Observable<string> {
+  private getContributorCount(repoName: string): Observable<number> {
     // return this.http.get(`https://api.github.com/repos/epam/${repoName}/contributors`)
     //   .map(resp => resp.json())
     //   .flatMap(it => it)
     //   .count(it => true)
     // .map(it => it.toString());
-    return Observable.of('30');
+    return Observable.of(30);
   }
 
   private getLanguages(repoName: string): Observable<Language[]> {
@@ -172,7 +176,7 @@ export class ProjectService {
     const lastIndex = nameWithNumbers.length - 1;
     nameWithNumbers.forEach(it => {
       const percent = (lastIndex === index)
-        ? ((Math.trunc (100 - tempSumInPercent) * 100) / 100)
+        ? ((Math.trunc(100 - tempSumInPercent) * 100) / 100)
         : (Math.trunc((it.num * 100 / sum) * 100) / 100);
 
       tempSumInPercent += percent;

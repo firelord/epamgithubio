@@ -12,6 +12,7 @@ export class MainMenuComponent implements OnInit {
               private projectService: ProjectService) {
   }
 
+  updateAtAscOrdering = false;
   activeCategory = 0;
   categories: { id, name }[];
 
@@ -29,5 +30,10 @@ export class MainMenuComponent implements OnInit {
     event.preventDefault();
     this.activeCategory = category;
     this.projectService.searchEvent.emit({category: category});
+  }
+
+  changeUpdateAtOrdering() {
+    this.updateAtAscOrdering = !this.updateAtAscOrdering;
+    this.projectService.searchEvent.emit({orderByAscUpdatedAt: this.updateAtAscOrdering});
   }
 }

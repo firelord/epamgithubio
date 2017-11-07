@@ -10,8 +10,8 @@ export class ProjectDetailInfo {
               public languages: Observable<Language[]>,
               public licence: string,
               public commitCount: Observable<string>,
-              public contributorCount: Observable<string>,
-              public forkCount: string,
-              public issueCount: string) {
+              public contributorCount: Observable<number>,
+              public forkCount: number,
+              public issueCount: number) {
   }
 }

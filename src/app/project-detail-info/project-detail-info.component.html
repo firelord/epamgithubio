@@ -7,7 +7,7 @@
         <div [innerHtml]="detail.readMe | async">
         </div>
       </div>
-      <div class="full-description-block">
+      <a class="full-description-block" href="{{detail.githubUrl}}/blob/master/README.md">
         <span>Full Description</span>
         <svg class="right-arrow">
           <path
@@ -16,7 +16,7 @@
             transform="translate(12.000000, 10.000000) rotate(-45.000000) translate(-13.000000, -10.000000) ">
           </path>
         </svg>
-      </div>
+      </a>
     </div>
     <div class="empty-block"></div>
     <div class="right-block">
@@ -43,12 +43,12 @@
     <span class="separator"></span>
     <span class="number">{{detail.contributorCount | async}}</span>
     <span class="characteristic"> Contributions</span>
-    <span class="separator"></span>
-    <span class="number">{{detail.issueCount}}</span>
-    <span class="characteristic"> Issues</span>
-    <span class="separator"></span>
-    <span class="number">{{detail.forkCount}}</span>
-    <span class="characteristic"> Forks</span>
+    <span *ngIf="detail.issueCount !== 0" class="separator"></span>
+    <span *ngIf="detail.issueCount !== 0" class="number">{{detail.issueCount}}</span>
+    <span *ngIf="detail.issueCount !== 0" class="characteristic"> Issues</span>
+    <span *ngIf="detail.forkCount !== 0" class="separator"></span>
+    <span *ngIf="detail.forkCount !== 0" class="number">{{detail.forkCount}}</span>
+    <span *ngIf="detail.forkCount !== 0" class="characteristic"> Forks</span>
   </div>
 </div>
 

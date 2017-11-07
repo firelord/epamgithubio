@@ -19,7 +19,7 @@ import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
 export class ProjectsComponent implements OnInit {
   activeProjectName = '';
 
-  firstProjects: Observable<Project[]> = this.projectService.search({});
+  firstProjects: Observable<Project[]> = this.projectService.search({orderByAscUpdatedAt: false});
   secondProjects: Observable<Project[]> = Observable.empty();
   count = this.firstProjects.flatMap(it => it).count(it => true);
 
@@ -27,7 +27,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.projectService.searchEvent.subscribe(request => {
+    this.projectService.search$.subscribe(request => {
       this.activeProjectName = '';
       this.firstProjects = this.projectService.search(request);
       this.secondProjects = Observable.empty();

@@ -4,17 +4,17 @@
     <a *ngIf="activeCategory !== 0" href="#" class="link" (click)="chooseActiveCategory($event, 0)">
       All
     </a>
-    <span *ngIf="activeCategory === 0" class="active link">
-    All
-  </span>
+    <span *ngIf="activeCategory === 0" class="active link">All</span>
     <a href="#" *ngFor="let category of categories;"
        ngClass="{{activeCategory == category.id ? 'active link' : 'link'}}"
        (click)="chooseActiveCategory($event, category.id)">
       {{category.name}}
     </a>
-    <!--</div>-->
     <div class="floating-empty-block"></div>
-    <span class="date-label">Date</span>
-    <div class="arrow-up"></div>
+    <div class="date-block" (click)="changeUpdateAtOrdering()">
+      <span class="date-label">Date</span>
+      <div *ngIf="updateAtAscOrdering" class="arrow-up"></div>
+      <div *ngIf="!updateAtAscOrdering" class="arrow-down"></div>
+    </div>
   </div>
 </div>
