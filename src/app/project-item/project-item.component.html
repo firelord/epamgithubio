@@ -1,6 +1,6 @@
 <div class="project-item">
   <div class="header">
-    <a href="#" class="name">{{project.name}}</a>
+    <a href="{{project.githubUrl}}" class="name">{{project.name}}</a>
     <span class="category">{{project.category}}</span>
   </div>
   <div class="description">
@@ -11,8 +11,6 @@
   <div class="footer">
     <span class="lang-label {{project.language}}"></span>
     <span class="language">{{project.language}}</span>
-    <span class="separator"></span>
-    <span class="licence">{{project.licence}}</span>
     <div class="more-or-less-block" (click)="selectBlock(project.name)">
       <span *ngIf="activeProject" class="more-or-less-label">Less</span>
       <svg *ngIf="activeProject" class="more-or-less-icon">
