@@ -41,10 +41,6 @@ import { ProjectDetailInfoComponent } from './project-detail-info/project-detail
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot([
-      {path: '', redirectTo: 'repoList', pathMatch: 'prefix'},
-      {path: 'repoList', component: AppComponent}
-    ]),
     Ng2Webstorage.forRoot({prefix: 'epamghio', separator: '-'}),
     HttpModule
   ],
