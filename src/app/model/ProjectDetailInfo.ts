@@ -9,7 +9,7 @@ export class ProjectDetailInfo {
               public lastUpdated: string,
               public languages: Observable<Language[]>,
               public licence: string,
-              public commitCount: Observable<string>,
+              public commitCount: Observable<number>,
               public contributorCount: Observable<number>,
               public forkCount: number,
               public issueCount: number) {
