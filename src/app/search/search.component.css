@@ -41,7 +41,7 @@
 }
 
 .search-block input {
-  padding-left: 10px;
+  padding-left: 40px;
   margin-right: 5px;
   width: 586px;
   line-height: 35px;
@@ -57,4 +57,3 @@
   color: #FFFFFF;
   border: none;
 }
-
