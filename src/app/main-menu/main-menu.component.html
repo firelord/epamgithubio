@@ -1,6 +1,5 @@
 <div class="menu-wrapper">
   <div class="main-menu">
-    <!--<div class="left-block">-->
     <a *ngIf="activeCategory !== 0" href="#" class="link" (click)="chooseActiveCategory($event, 0)">
       All
     </a>
@@ -11,6 +10,7 @@
       {{category.name}}
     </a>
     <div class="floating-empty-block"></div>
+    <epamghio-language-select></epamghio-language-select>
     <div class="date-block" (click)="changeUpdateAtOrdering()">
       <span class="date-label">Date</span>
       <div *ngIf="updateAtAscOrdering" class="arrow-up"></div>

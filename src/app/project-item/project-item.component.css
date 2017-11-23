@@ -20,6 +20,9 @@
   font-size: 16px; /* todo:xxx in order to full text stays in header */
   font-weight: 600;
   line-height: 31px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .name:hover {
@@ -31,6 +34,7 @@
   font-size: 16px;
   line-height: 20px;
   text-align: right;
+  padding-left: 10px;
 }
 
 .description {

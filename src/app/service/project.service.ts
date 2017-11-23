@@ -12,24 +12,18 @@ import 'rxjs/add/operator/count';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/publishReplay';
 import {Headers, Http, Request, RequestMethod} from '@angular/http';
-import marky from 'marky-markdown';
-import {DomSanitizer} from '@angular/platform-browser';
 import {CategoryService} from './category.service';
 import {Language} from '../model/Language';
-import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
 import * as moment from 'moment';
-
 
 @Injectable()
 export class ProjectService {
   searchEvent: EventEmitter<any> = new EventEmitter();
   search$ = this.searchEvent.scan((acc, curr) => Object.assign({}, acc, curr), {});
   activeProjectEvent: EventEmitter<string> = new EventEmitter();
-  projectSelectedEvent: EventEmitter<ProjectDetailInfo> = new EventEmitter();
+  projectSelectedEvent: EventEmitter<Project> = new EventEmitter();
 
-  constructor(private http: Http,
-              private categoryService: CategoryService,
-              private sanitizer: DomSanitizer) {
+  constructor(private http: Http, private categoryService: CategoryService) {
   }
 
   search(searchObject): Observable<Project[]> {
@@ -38,22 +32,14 @@ export class ProjectService {
     const category = searchObject.category || 0;
     const sortOrder = searchObject.orderByAscUpdatedAt;
 
-    let queryParam = `q=org:epam+${filter}+in:name+in:readme`;
-
-    if (language)
-      queryParam += `+language=${language}`;
-
-    const request = new Request({url: '/orgs/epam/repos', params: queryParam});
-    // const request = new Request({url: 'https://api.github.com/search/repositories', params: queryParam});
-    request.method = RequestMethod.Get;
-    request.headers = new Headers({'content-type': 'application/json'});
+    const request = this.buildRequestToServer(filter, language);
 
     const compareFn = sortOrder
       ? ((a, b) => a.updatedAt.unix() - b.updatedAt.unix())
       : ((a, b) => b.updatedAt.unix() - a.updatedAt.unix());
 
     return this.http.request(request)
-      .map(resp => resp.json()['items'])
+      .map(resp => resp.json())
       .flatMap(it => it)
       .map(it => {
         return {
@@ -66,7 +52,11 @@ export class ProjectService {
           githubUrl: it['html_url'],
           updatedAt: moment(it['updated_at']),
           forkCount: it['forks_count'],
-          issueCount: it['open_issues_count']
+          issueCount: it['open_issues_count'],
+          commitCount: it['commitCount'],
+          contributorCount: it['contributorCount'],
+          org: it['owner'].login,
+          languages: this.processLanguagesObject(it['languages']),
         };
       })
       .filter(it => this.categoryService.relatesToCategory(it.name, category))
@@ -75,86 +65,25 @@ export class ProjectService {
       .publishReplay(1).refCount();
   }
 
-  private _requestMd(repoName: string): Observable<string> {
-    return this.http.get(`/orgs/EPAM/README.md`)
-    // return this.http.get(`https://raw.githubusercontent.com/epam/${repoName}/master/README.md`)
-      .map(it => it.text())
-      .map(it => this._processText(it))
-      .map(it => this.sanitizer.bypassSecurityTrustHtml(marky(it)));
-  }
+  private buildRequestToServer(filter: string, language: string) {
+    const queryParams = [];
 
-  private _processText(text: string) {
-    const strings = text.split('\n')
-      .map(it => it.replace(/&nbsp;/g, ''))
-      .map(it => it.trim())
-      .filter(it =>
-        !it.startsWith('=') &&
-        !it.startsWith('![') &&
-        !it.startsWith('#') &&
-        !it.startsWith('|') &&
-        !it.startsWith('--') &&
-        !it.startsWith('['));
+    if (filter.length > 0)
+      queryParams.push(`filter=${filter}`);
 
-    const excludedLines = this._findLinesOfCode(strings);
+    if (language)
+      queryParams.push(`language=${language}`);
 
-    return strings.filter((value, index) => excludedLines.indexOf(index) === -1).join('\n');
-  }
+    const urlParams = queryParams.length > 0 ? '' + queryParams.join('&') : '';
 
-  private _findLinesOfCode(strings: string[]): Array<number> {
-    const codeLineIndexes = [];
-    strings.forEach(
-      (str, index) => {
-        if (str.startsWith('```'))
-          codeLineIndexes.push(index);
-      });
+    const request = new Request({
+      url: 'repo/all',
+      params: urlParams
+    });
 
-    const result = Array<number>();
-
-    for (let _i = 0; _i < codeLineIndexes.length || ((_i + 1) === codeLineIndexes.length); _i = _i + 2)
-      for (let _j = codeLineIndexes[_i]; _j <= codeLineIndexes[_i + 1]; _j++)
-        result.push(_j);
-
-    return result;
-  }
-
-  getProjectDetailInfo(project: Project): ProjectDetailInfo {
-    return new ProjectDetailInfo(
-      project.id,
-      project.name,
-      project.githubUrl,
-      this._requestMd(project.name),
-      project.updatedAt.format('on MMM DD, YYYY'),
-      this.getLanguages(project.name),
-      '',
-      this.getCommitCount(project.name),
-      this.getContributorCount(project.name),
-      project.forkCount,
-      project.issueCount
-    );
-  }
-
-  private getCommitCount(repoName: string): Observable<string> {
-    // return this.http.get(`https://api.github.com/repos/epam/${repoName}/commits`)
-    //   .map(resp => resp.json())
-    //   .flatMap(it => it)
-    //   .count(it => true)
-    //   .map(it => it.toString());
-    return Observable.of('30');
-  }
-
-  private getContributorCount(repoName: string): Observable<number> {
-    // return this.http.get(`https://api.github.com/repos/epam/${repoName}/contributors`)
-    //   .map(resp => resp.json())
-    //   .flatMap(it => it)
-    //   .count(it => true)
-    // .map(it => it.toString());
-    return Observable.of(30);
-  }
-
-  private getLanguages(repoName: string): Observable<Language[]> {
-    return this.http.get(`/languages`)
-      .map(resp => resp.json())
-      .map(it => this.processLanguagesObject(it));
+    request.method = RequestMethod.Get;
+    request.headers = new Headers({'content-type': 'application/json'});
+    return request;
   }
 
   private processLanguagesObject(langJson: object): Language[] {
@@ -166,7 +95,8 @@ export class ProjectService {
 
     nameWithNumbers = this.shortLanguagesListIfNeeded(nameWithNumbers);
 
-    return this.getPercentOfCodeFromLinesOfCode(nameWithNumbers, sum);
+    return this.getPercentOfCodeFromLinesOfCode(nameWithNumbers, sum)
+      .filter(it => it.percent > 0.01);
   }
 
   private getPercentOfCodeFromLinesOfCode(nameWithNumbers: NameWithNumber[], sum: number): Language[] {
@@ -200,5 +130,3 @@ class NameWithNumber {
   constructor(public name: string, public num: number) {
   }
 }
-
-

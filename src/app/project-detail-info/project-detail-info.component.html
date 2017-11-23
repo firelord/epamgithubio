@@ -1,10 +1,10 @@
-<div class="col-md-12 project-detail-info">
+<div *ngIf="detail !== null" class="col-md-12 project-detail-info">
   <div class="header">{{detail.name}}</div>
   <div class="center-block">
     <div class="description">
       <a href="{{detail.githubUrl}}" class="link-to-github">{{detail.githubUrl}}</a>
       <div class="description-text">
-        <div [innerHtml]="detail.readMe | async">
+        <div [innerHtml]="readMe | async">
         </div>
       </div>
       <a class="full-description-block" href="{{detail.githubUrl}}/blob/master/README.md">
@@ -23,25 +23,25 @@
       <div class="languages-block">
         <span class="languages-label">LANGUAGES:</span>
         <ol>
-          <li *ngFor="let language of detail.languages | async">
+          <li *ngFor="let language of detail.languages">
             <span class="lang-label small {{language.name}}"></span>
             <span class="language">{{language.name}}</span>
             <span class="language-percentage">{{language.percent}}%</span>
           </li>
         </ol>
       </div>
-      <div class="updated-at-block">
+      <div class="updated-at-block" *ngIf="detail.updatedAt != null">
         <span class="updated-label">UPDATED:</span>
         <br>
-        <span class="updated">{{detail.lastUpdated}}</span>
+        <span class="updated">{{detail.updatedAt.format('on MMM DD, YYYY')}}</span>
       </div>
     </div>
   </div>
   <div class="footer">
-    <span class="number">{{detail.commitCount | async}}</span>
+    <span class="number">{{detail.commitCount}}</span>
     <span class="characteristic"> Commits</span>
     <span class="separator"></span>
-    <span class="number">{{detail.contributorCount | async}}</span>
+    <span class="number">{{detail.contributorCount}}</span>
     <span class="characteristic"> Contributions</span>
     <span *ngIf="detail.issueCount !== 0" class="separator"></span>
     <span *ngIf="detail.issueCount !== 0" class="number">{{detail.issueCount}}</span>

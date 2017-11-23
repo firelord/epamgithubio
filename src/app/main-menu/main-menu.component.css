@@ -16,9 +16,7 @@
 }
 
 .language-select {
-  margin-top:-12px;
   border: 1px solid #E5E5E5;
-  /*background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;*/
   width: 180px;
   height: 36px;
   overflow: hidden;
@@ -36,7 +34,6 @@
 }
 
 .date-label {
-  margin-top:-12px;
   margin-left: 30px;
   color: #464547;
   font-size: 16px;
@@ -45,7 +42,6 @@
 }
 
 .arrow-down {
-  margin-top:-12px;
   width: 0;
   height: 0;
   border-left: 4px solid transparent;
@@ -76,6 +72,8 @@
   font-weight: 600;
   border-bottom: 2px solid #38C2D7;
 }
+
+
 
 .date-block {
   cursor: pointer;

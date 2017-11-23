@@ -13,13 +13,15 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
 import { SearchProjectComponent } from './search-project/search-project.component';
 import {ProjectService} from './service/project.service';
-import {RouterModule} from '@angular/router';
+
 import { HeaderComponent } from './header/header.component';
 import { SearchComponent } from './search/search.component';
 import { CategoryBlockComponent } from './category-block/category-block.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import {CategoryService} from './service/category.service';
 import { ProjectDetailInfoComponent } from './project-detail-info/project-detail-info.component';
+import { LanguageSelectComponent } from './language-select/language-select.component';
+import {SelectModule} from 'ng2-select';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ProjectDetailInfoComponent } from './project-detail-info/project-detail
     SearchComponent,
     CategoryBlockComponent,
     MainMenuComponent,
-    ProjectDetailInfoComponent
+    ProjectDetailInfoComponent,
+    LanguageSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { ProjectDetailInfoComponent } from './project-detail-info/project-detail
     FormsModule,
     BrowserAnimationsModule,
     Ng2Webstorage.forRoot({prefix: 'epamghio', separator: '-'}),
-    HttpModule
+    HttpModule,
+    SelectModule
   ],
   providers: [ProjectService, CategoryService],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@ export class CategoryService {
   categories = {
     1: 'BigData & Cloud',
     2: 'Life Science',
-    3: 'Testing & Development',
+    3: 'Test & Dev',
     4: 'Misc'
   };
 

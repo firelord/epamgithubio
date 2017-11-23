@@ -4,7 +4,10 @@
     <span class="category">{{project.category}}</span>
   </div>
   <div class="description">
-    <p>
+    <p *ngIf="project.description == null || project.description.length == 0">
+      no description
+    </p>
+    <p *ngIf="project.description != null && project.description.length > 0">
       {{project.description}}
     </p>
   </div>

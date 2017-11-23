@@ -1,12 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Project} from '../model/Project';
 import {Observable} from 'rxjs/Observable';
 import {ProjectService} from '../service/project.service';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/find';
 import 'rxjs/add/operator/map';
-import {ProjectDetailInfo} from '../model/ProjectDetailInfo';
-
 
 /**
  * Projects separated on 2 parts - before active project detail info and after.
@@ -52,12 +50,11 @@ export class ProjectsComponent implements OnInit {
       .concat(this.secondProjects.flatMap(it => it));
   }
 
-  private getActiveProject(allProjects$, projectName): Observable<ProjectDetailInfo> {
+  private getActiveProject(allProjects$, projectName): Observable<Project> {
     if (projectName === '')
       return null;
 
-    return allProjects$.find(it => it.name === projectName)
-      .map(it => this.projectService.getProjectDetailInfo(it));
+    return allProjects$.find(it => it.name === projectName);
   }
 
   private divideProjectsOnTwoParts(allProjects$, projectName) {
