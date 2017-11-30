@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ProjectService} from "../service/project.service";
+import {ProjectService} from '../service/project.service';
 
 @Component({
   selector: 'epamghio-language-select',
@@ -7,22 +7,22 @@ import {ProjectService} from "../service/project.service";
   styleUrls: ['./language-select.component.css']
 })
 export class LanguageSelectComponent {
+  ANY_VALUE = 'Any';
   public items: Array<any> = [
-    'Any',
+    this.ANY_VALUE,
     'Java', 'C', 'C++', 'Objective-C',
     'Ruby', 'Python', 'Javascript', 'Html',
     'CSS', 'Typescript', 'C#', 'Erlang'
   ];
 
-  private value: any = {};
+  private value: any = {id: this.ANY_VALUE, text: this.ANY_VALUE};
 
   constructor(private projectService: ProjectService) {
 
   }
 
   public selected(value: any): void {
-    console.log(value);
-    this.projectService.searchEvent.emit({language: value.id});
+    this.projectService.searchEvent.emit({language: value.id === this.ANY_VALUE ? '' : value.id});
   }
 
   public refreshValue(value: any): void {

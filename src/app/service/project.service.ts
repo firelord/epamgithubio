@@ -72,7 +72,7 @@ export class ProjectService {
       queryParams.push(`filter=${filter}`);
 
     if (language)
-      queryParams.push(`language=${language}`);
+      queryParams.push(`language=${encodeURIComponent(language)}`);
 
     const urlParams = queryParams.length > 0 ? '' + queryParams.join('&') : '';
 

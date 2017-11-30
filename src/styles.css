@@ -1,6 +1,6 @@
 html {
   height: 100%;
-  font-family: "Source Sans Pro", serif;
+  font-family: "Source Sans Pro", serif !important;
 }
 
 /* Language colors */
@@ -53,3 +53,9 @@ html {
 .lang-label.Objective-C {
   background-color: #438eff;
 }
+
+.ui-select-container {
+  background-image: none !important;
+  color: #38C2D7;
+}
+

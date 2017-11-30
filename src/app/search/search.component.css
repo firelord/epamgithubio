@@ -49,10 +49,13 @@
   outline: none;
 }
 
-.search-block button {
-  height: 40px;
-  background-color: #8C8F93;
-  border-radius: 5px;
-  color: #FFFFFF;
-  border: none;
+.search-icon {
+  position: relative;
+  top: 17px;
+  left: 47px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  color: blue;
+  background: url("../../assets/search-icon.svg") no-repeat;
 }

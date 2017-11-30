@@ -1,7 +1,8 @@
-<div style="width: 300px;">
+<div style="width: 180px;">
   <ng-select [items]="items"
              (data)="refreshValue($event)"
              (selected)="selected($event)"
+             [active]="[{id: ANY_VALUE, text: ANY_VALUE}]"
              placeholder="Any Language">
   </ng-select>
 </div>
