@@ -17,16 +17,12 @@
 
 .name {
   color: #38C2D7;
-  font-size: 16px; /* todo:xxx in order to full text stays in header */
+  font-size: 23px; /* todo:xxx in order to full text stays in header */
   font-weight: 600;
   line-height: 31px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.name:hover {
-  /* todo */
 }
 
 .category {
@@ -50,7 +46,6 @@
   display: -webkit-box;
   max-width: 400px;
   height: 75px;
-  /*margin: 0 auto;*/
   line-height: 24px;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

@@ -1,4 +1,9 @@
-html {
+@font-face {
+  font-family: Source Sans Pro;
+  src: url("assets/SourceSansProRegular.woff");
+}
+
+html body{
   height: 100%;
   font-family: "Source Sans Pro", serif !important;
 }
