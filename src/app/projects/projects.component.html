@@ -1,16 +1,16 @@
 <div class="projects">
   <span class="project-count">
-    <b>{{count | async}}</b> PROJECTS
+    <b>{{count}}</b> PROJECTS
   </span>
   <div class="row">
-    <div *ngFor="let project of firstProjects | async;" class="col-md-4">
+    <div *ngFor="let project of firstProjects" class="col-md-4">
       <epamghio-project-item
         [activeProject]="project.name === activeProjectName"
         [project]="project"></epamghio-project-item>
     </div>
     <epamghio-project-detail-info [ngClass]="{'col-md-12': true, 'hidden': activeProjectName === ''}">
     </epamghio-project-detail-info>
-    <div *ngFor="let project of secondProjects | async;" class="col-md-4">
+    <div *ngFor="let project of secondProjects" class="col-md-4">
       <epamghio-project-item [project]="project"></epamghio-project-item>
     </div>
   </div>

@@ -47,7 +47,6 @@ export class ProjectService {
           name: it['name'],
           category: this.categoryService.getCategory(it['name']),
           language: it['language'],
-          licence: 'Apache-2.0',
           description: it['description'],
           githubUrl: it['html_url'],
           updatedAt: moment(it['updated_at']),

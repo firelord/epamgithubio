@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from '../model/Project';
-import {Observable} from 'rxjs/Observable';
 import {ProjectService} from '../service/project.service';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/operator/find';
@@ -17,57 +16,61 @@ import 'rxjs/add/operator/map';
 export class ProjectsComponent implements OnInit {
   activeProjectName = '';
 
-  firstProjects: Observable<Project[]> = this.projectService.search({orderByAscUpdatedAt: false});
-  secondProjects: Observable<Project[]> = Observable.empty();
-  count = this.firstProjects.flatMap(it => it).count(it => true);
+  firstProjects: Project[];
+  secondProjects: Project[] = [];
+
+  count = 0;
 
   constructor(private projectService: ProjectService) {
   }
 
   ngOnInit() {
+    this.initAllProjects({orderByAscUpdatedAt: false});
+
     this.projectService.search$.subscribe(request => {
       this.activeProjectName = '';
-      this.firstProjects = this.projectService.search(request);
-      this.secondProjects = Observable.empty();
-      this.count = this.firstProjects.flatMap(it => it).count(it => true);
+      this.initAllProjects(request);
     });
 
     this.projectService.activeProjectEvent.subscribe(projectName => {
       this.activeProjectName = this.activeProjectName === projectName ? '' : projectName;
-      const allProjects$ = this.getAllProjects();
-      this.divideProjectsOnTwoParts(allProjects$, projectName);
+      const allProjects = this.getAllProjects();
+      this.divideProjectsOnTwoParts(allProjects, this.activeProjectName);
 
-      this.getActiveProject(allProjects$, projectName)
-        .subscribe(
-          it => this.projectService.projectSelectedEvent.emit(it)
-        );
+      const activeProject = this.getActiveProject(allProjects, projectName);
+      this.projectService.projectSelectedEvent.emit(activeProject);
     });
   }
 
-  private getAllProjects() {
-    return this.firstProjects
-      .flatMap(it => it)
-      .concat(this.secondProjects.flatMap(it => it));
+  private initAllProjects(request) {
+    this.projectService.search(request)
+      .subscribe(
+        projects => {
+          this.divideProjectsOnTwoParts(projects, this.activeProjectName);
+          this.count = this.getAllProjects().length;
+        }
+      );
   }
 
-  private getActiveProject(allProjects$, projectName): Observable<Project> {
+  private getAllProjects() {
+    return this.firstProjects.concat(this.secondProjects);
+  }
+
+  private getActiveProject(allProjects, projectName): Project {
     if (projectName === '')
       return null;
 
-    return allProjects$.find(it => it.name === projectName);
+    return allProjects.find(it => it.name === projectName);
   }
 
-  private divideProjectsOnTwoParts(allProjects$, projectName) {
+  private divideProjectsOnTwoParts(allProjects, projectName) {
     if (projectName === '') {
-      this.firstProjects = allProjects$.toArray();
+      this.firstProjects = allProjects;
     } else {
-      allProjects$.findIndex(it => it.name === projectName).subscribe(
-        indexOfFoundedItem => {
-          const countOfItemsBeforeSeparation = this.getCountOfItemsBeforeSeparation(indexOfFoundedItem);
-          this.firstProjects = allProjects$.take(countOfItemsBeforeSeparation).toArray();
-          this.secondProjects = allProjects$.skip(countOfItemsBeforeSeparation).toArray();
-        }
-      );
+      const indexOfFoundedItem = allProjects.findIndex(it => it.name === projectName);
+      const countOfItemsBeforeSeparation = this.getCountOfItemsBeforeSeparation(indexOfFoundedItem);
+      this.firstProjects = allProjects.slice(0, countOfItemsBeforeSeparation);
+      this.secondProjects = allProjects.slice(countOfItemsBeforeSeparation);
     }
   }
 
